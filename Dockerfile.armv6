@@ -46,7 +46,7 @@ RUN \
     /root/.cache \
     /tmp/*
 
-add local files
+# add local files
 COPY root/ /
 
 # ports and volumes
