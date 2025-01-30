@@ -1,15 +1,10 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/unrar:arm64v8-latest AS unrar
-
-FROM ghcr.io/linuxserver/baseimage-alpine:arm64v8-edge
+FROM arm32v6/alpine:edge
 
 # set version label
-ARG BUILD_DATE
-ARG VERSION
 ARG QBITTORRENT_VERSION
 ARG QBT_CLI_VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thespad"
 
 # environment settings
@@ -22,6 +17,8 @@ RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
     grep \
+    curl \
+    jq \
     icu-libs \
     p7zip \
     python3 \
@@ -40,21 +37,17 @@ RUN \
   fi && \
   curl -o \
     /tmp/qbt.tar.gz -L \
-    "https://github.com/fedarovich/qbittorrent-cli/releases/download/${QBT_CLI_VERSION}/qbt-linux-alpine-arm64-net6-${QBT_CLI_VERSION#v}.tar.gz" && \
+    "https://github.com/fedarovich/qbittorrent-cli/releases/download/${QBT_CLI_VERSION}/qbt-linux-alpine-arm-net6-${QBT_CLI_VERSION#v}.tar.gz" && \
   tar xf \
     /tmp/qbt.tar.gz -C \
     /qbt && \
-  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   rm -rf \
     /root/.cache \
     /tmp/*
 
-# add local files
+add local files
 COPY root/ /
-
-# add unrar
-COPY --from=unrar /usr/bin/unrar-alpine /usr/bin/unrar
 
 # ports and volumes
 EXPOSE 8080 6881 6881/udp
