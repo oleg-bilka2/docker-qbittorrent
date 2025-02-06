@@ -98,3 +98,6 @@ COPY root/ /
 EXPOSE 8080 6881 6881/udp
 
 VOLUME /config
+
+ENTRYPOINT ["/package/admin/s6/command/s6-svscan", "/etc/s6-overlay/s6-rc.d"]
+CMD []
