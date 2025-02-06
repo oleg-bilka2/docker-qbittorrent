@@ -86,6 +86,7 @@ RUN \
     /tmp/qbt.tar.gz -C \
     /qbt && \
   echo "**** cleanup ****" && \
+  mkdir -p /run/s6/container_environment \ 
   rm -rf \
     /root/.cache \
     /tmp/*
