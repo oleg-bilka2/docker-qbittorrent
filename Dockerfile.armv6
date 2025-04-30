@@ -5,7 +5,7 @@ FROM arm32v6/alpine:edge
 # set version label
 ARG QBITTORRENT_VERSION
 ARG QBT_CLI_VERSION
-LABEL maintainer="thespad"
+LABEL maintainer="oleg"
 
 # environment settings
 ENV HOME="/config" \
